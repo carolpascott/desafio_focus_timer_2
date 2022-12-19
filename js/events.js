@@ -1,60 +1,108 @@
 import {
     buttonPlay,
-    buttonPause,
     buttonStop,
-    buttonSet,
-    buttonSoundOn,
-    buttonSoundOff
+    buttonMore,
+    buttonLess,
+    buttonSoundFlorest,
+    buttonSoundRain,
+    buttonSoundCoffee,
+    buttonSoundFireplace,
+    buttonPressAudio,
+    soundFlorest,
+    soundRain,
+    soundCoffee,
+    soundFireplace
 } from "./elements.js"
 
-export default function Events({
-    controls, 
-    timer, 
-    sounds
-}) {
+export default function Events({ timer }) {
+
+    let play_florest = false
+    let play_rain = false
+    let play_coffee = false
+    let play_fireplace = false
 
     buttonPlay.addEventListener('click', function() {
-        controls.play()
+        buttonPlay.classList.add('selected')
         timer.count_down()
-        sounds.pressButton()
+        buttonPressAudio.play()
     })
-    
-    buttonPause.addEventListener('click', function() {
-        controls.pause()
-        timer.hold()
-        sounds.pressButton()
-    
-    })
-    
+
     buttonStop.addEventListener('click', function() {
-        controls.reset()
+        buttonPlay.classList.remove('selected')
         timer.reset()
-        sounds.pressButton()
-    
+        buttonPressAudio.play()
     })
-    
-    buttonSoundOff.addEventListener('click', function() {
-        buttonSoundOff.classList.add("hide")
-        buttonSoundOn.classList.remove("hide")
-        sounds.bgAudio.play()
-        
+
+    buttonMore.addEventListener('click', function() {
+        timer.more_five_minutes()
+        buttonPressAudio.play()
     })
-    
-    buttonSoundOn.addEventListener('click', function() {
-        buttonSoundOn.classList.add("hide")
-        buttonSoundOff.classList.remove("hide")
-        sounds.bgAudio.pause()
+
+    buttonLess.addEventListener('click', function() {
+        timer.less_five_minutes()
+        buttonPressAudio.play()
     })
-    
-    buttonSet.addEventListener('click', function() {
-        let newMinutes = controls.get_minutes()
-        if(!newMinutes) {
-            timer.reset()
-            return
+
+    buttonSoundFlorest.addEventListener('click', function() {
+        buttonPressAudio.play()
+        no_selected()
+        play_florest =~ play_florest
+        if(play_florest) {
+            buttonSoundFlorest.classList.add('selected')
+            soundFlorest.play()
+            play_rain = false
+            play_coffee = false
+            play_fireplace = false
         }
-    
-        timer.update_display(newMinutes, 0)
-        timer.update_minutes(newMinutes)
     })
-    
+
+    buttonSoundRain.addEventListener('click', function() {
+        buttonPressAudio.play()
+        no_selected()
+        play_rain =~ play_rain
+        if(play_rain) {
+            buttonSoundRain.classList.add('selected')
+            soundRain.play()
+            play_florest = false
+            play_coffee = false
+            play_fireplace = false
+        }
+    })
+
+    buttonSoundCoffee.addEventListener('click', function() {
+        buttonPressAudio.play()
+        no_selected()
+        play_coffee =~ play_coffee
+        if(play_coffee) {
+            buttonSoundCoffee.classList.add('selected')
+            soundCoffee.play()
+            play_florest = false
+            play_rain = false
+            play_fireplace = false
+        }
+    })
+
+    buttonSoundFireplace.addEventListener('click', function() {
+        buttonPressAudio.play()
+        no_selected()
+        play_fireplace =~ play_fireplace
+        if(play_fireplace) {
+            buttonSoundFireplace.classList.add('selected')
+            soundFireplace.play()
+            play_florest = false
+            play_rain = false
+            play_coffee = false
+        }
+    })
+
+    function no_selected () {
+        buttonSoundFlorest.classList.remove('selected')
+        buttonSoundRain.classList.remove('selected')
+        buttonSoundCoffee.classList.remove('selected')
+        buttonSoundFireplace.classList.remove('selected')
+        soundFlorest.pause()
+        soundRain.pause()
+        soundCoffee.pause()
+        soundFireplace.pause()
+    }
 }

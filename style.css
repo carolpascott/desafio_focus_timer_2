@@ -42,16 +42,6 @@ main {
     fill: var(--line-select-card);
 }
 
-.noSelected svg path:nth-child(1) {
-
-    fill: var(--bg-noselect-card);
-}
-
-.noSelected svg path:nth-child(2) {
-
-    fill: var(--line-noselect-card);
-}
-
 #timer {
     display: flex;
     flex-direction: column;

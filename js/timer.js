@@ -1,28 +1,14 @@
-import Sounds from "./sounds.js"
-
-export default function Timer({
+import { 
     minutesDisplay,
     secondsDisplay,
-    reset_controls
-}) {
+    endTimer
+} from "./elements.js"
 
-    let timerTimerOut
+export default function Timer() {
+
+    let timerTimerOut = 0
     let minutes = Number(minutesDisplay.textContent)
 
-
-    function update_display(newMinutes, seconds) {
-
-        newMinutes = newMinutes  === undefined ? minutes : newMinutes
-        seconds = seconds === undefined ? 0 : seconds
-        minutesDisplay.textContent = String(newMinutes).padStart(2, '0')
-        secondsDisplay.textContent = String(seconds).padStart(2, '0')
-    }
-    
-    function reset() {
-        update_display(minutes, 0)
-        clearTimeout(timerTimerOut)
-    }
-    
     function count_down() {
         timerTimerOut = setTimeout(function() {
             let seconds = Number(secondsDisplay.textContent)
@@ -32,33 +18,57 @@ export default function Timer({
                 seconds = 60
                 
                 if(minutes <= 0) {
-                    reset_controls()
-                    update_display()
-                    Sounds().timeEnd()                
+                    endTimer.play()
+                    reset()
                     return
                 }
                 minutes--       
             }
     
-            update_display(minutes, --seconds)  
-    
+            update_display(minutes, --seconds)
+
             count_down()
         }, 1000)
     }
 
-    function update_minutes(newMinutes) {
-        minutes = newMinutes
+    function reset() {
+        update_display(minutes, 0)
+        clearTimeout(timerTimerOut)
+        timerTimerOut = 0
     }
 
-    function hold() {
-        clearTimeout(timerTimerOut)
+    function more_five_minutes () {
+        if(timerTimerOut)
+            return
+       
+        if(minutes < 120) {
+            minutes += 5
+            update_display(minutes, 0) 
+        }
+    }
+
+    function less_five_minutes () {
+        if(timerTimerOut)
+            return
+
+        if(minutes > 10){
+            minutes -= 5
+            update_display(minutes, 0)
+        }
+     }
+
+    function update_display(newMinutes, seconds) {
+
+        newMinutes = newMinutes === undefined ? minutes : newMinutes
+        seconds = seconds === undefined ? 0 : seconds
+        minutesDisplay.textContent = String(newMinutes).padStart(2, '0')
+        secondsDisplay.textContent = String(seconds).padStart(2, '0')
     }
 
     return {
-        reset,
         count_down,
-        update_display,
-        update_minutes,
-        hold
+        reset,
+        more_five_minutes,
+        less_five_minutes,
     }
 }
