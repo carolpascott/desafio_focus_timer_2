@@ -2,7 +2,7 @@
 
 > Trilha Explorer, Stage 05
 
-<img src="https://github.com/carolpascott/desafio_focus_timer_2/blob/main/image/preview.jpeg?raw=true">
+<img src="https://github.com/carolpascott/desafio_focus_timer_2/blob/main/image/preview.jpg?raw=true">
 
 
 [Clique aqui para acessar](https://carolpascott.github.io/desafio_focus_timer_2/)
