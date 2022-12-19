@@ -1,6 +1,7 @@
 import { 
     minutesDisplay,
     secondsDisplay,
+    buttonPlay,
     endTimer
 } from "./elements.js"
 
@@ -20,6 +21,7 @@ export default function Timer() {
                 if(minutes <= 0) {
                     endTimer.play()
                     reset()
+                    buttonPlay.classList.remove('selected')
                     return
                 }
                 minutes--       
